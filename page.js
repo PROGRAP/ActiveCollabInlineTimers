@@ -151,6 +151,7 @@
 			removeMenu: function (e) {
 				if (TimerManager.timerForMenu) {
 					TimerManager.timerForMenu.el.menu.css('display', '');
+					TimerManager.timerForMenu.el.menu.css('opacity', '');
 					TimerManager.menuElement.remove();
 					TimerManager.menuElement = null;
 					TimerManager.timerForMenu = null;
@@ -196,7 +197,8 @@
 				if (timer) {
 
 					self.timerForMenu = timer;
-					self.timerForMenu.el.menu[0].style.setProperty('display', 'block', 'important');
+					self.timerForMenu.el.menu[0].style.setProperty('display', 'inline-block');
+					self.timerForMenu.el.menu[0].style.setProperty('opacity', '0.4');
 
 					self.menuElement = $('<div>');
 					timer.el.base.append([self.menuElement]);
@@ -332,21 +334,12 @@
 					timer.el.menu = $('<button>');
 					timer.el.time = $('<div>');
 
-					parentEl.append(timer.el.base.html([timer.el.time, timer.el.menu]));
+					parentEl.prepend(timer.el.base.html([timer.el.time])); //, timer.el.menu]));
 
-					// the task needs to be at an offset on individual project pages
-					if (window.location.pathname.match(/(\/projects\/)([0-9]*)/g)) {
-						parentEl.css({ paddingLeft: '100px' });
-						timer.el.base.css({ marginLeft: '-78px' });
-					}
-					else {
-						timer.el.base.css({ marginLeft: '-180px' });
-					}
-
-					timer.el.base.addClass('acit-timer');
+					timer.el.base.addClass('acit-timer task_panel');
 
 					timer.el.menu
-						.addClass('acit-timer-menu icon icon_options_dropdown_black')
+						.addClass('icon icon_options_dropdown_black')
 						.click(function (e) {
 							if (e.target != timer.el.menu[0]) return;
 							e.stopPropagation();
@@ -363,6 +356,12 @@
 						.click(function (e) {
 							Server.do('timer/clicked', { project: project, task: task });
 						})
+                        .contextmenu(function (e) {
+                            if (e.target != timer.el.time[0]) return;
+                            e.stopPropagation();
+                            e.preventDefault();
+                            self.showMenu(project, task);
+                        })
 						.dblclick(function (e) {
 							e.stopPropagation();
 							e.preventDefault();
@@ -409,7 +408,8 @@
 						var project = parseInt(split[1]);
 						var task = parseInt(split[3].split('?')[0]);
 						var timer = self.getTimer(project, task);
-						var parentEl = $(this).find('.task_view_mode').parent();
+						var parentEl = $(this).find('.task_view_mode');
+
 						if (!timer) {
 							self.addTimer(project, task, parentEl);
 						}
@@ -457,18 +457,20 @@
 			renderTimers: function () {
 				this.timers.forEach(function (timer) {
 					var html = utils.formattedTime(timer, 0, 0);
+
+                    timer.el.time.removeClass('running paused');
+
 					if (timer.state == 'running') {
-						timer.el.time.css({ backgroundColor: '#ff3c3c' });
+						timer.el.time.addClass('running');
 						if (timer.el.time.html().indexOf(':') !== -1) {
 							html = html.replace(':', ' ');
 						}
 					}
 					else if (timer.state == 'paused') {
-						timer.el.time.css({ backgroundColor: '#ffc637' });
+						timer.el.time.addClass('paused');
 					}
 					else {
 						html = "00:00";
-						timer.el.time.css({ backgroundColor: '#44a6ff' });
 					}
 					timer.el.time.html(html);
 				});

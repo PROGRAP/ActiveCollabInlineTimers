@@ -1,28 +1,72 @@
 .acit-timer {
-	position: absolute;
-	width: 172px;
-	left: 0;
-	top: 2px;
-	height: 19px;
-	line-height: 17px;
-	clear: right;
+	display: inline-block;
+	margin-right: 8px;
 	text-align: center;
 	cursor: default;
 	box-sizing: border-box;
 }
 
+#my_work .acit-timer {
+    vertical-align: top;
+    top: 1px;
+}
+
 .acit-timer-time {
-	width: 48px;
-	height: 19px;
-	line-height: 17px;
-	clear: none;
-	color: white;
-	text-align: center;
-	cursor: pointer;
-	float: right;
-	border-radius: 5px;
-	box-sizing: border-box;
-	border: 1px solid #aaa;
+    display: inline-block;
+    font-size: 11px;
+    color: #338DF2;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 30px;
+    box-sizing: border-box;
+    border: 1px solid #D8D8D8;
+    padding: 0 8px;
+    font-weight: 400;
+    vertical-align: middle;
+    height: 24px;
+    line-height: 22px;
+    transition: ease .3s border-color;
+}
+
+.acit-timer-time:hover {
+    color: #00A15E;
+    border-color: #00A15E;
+}
+
+.indigo .acit-timer-time {
+    color: #338DF2;
+}
+
+.indigo .acit-timer-time:hover {
+    border-color: #338DF2;
+}
+
+.cupcake .acit-timer-time {
+    color: #29BCDD;
+}
+
+.cupcake .acit-timer-time:hover {
+    border-color: #29BCDD;
+}
+
+.classic .acit-timer-time {
+    color: #4182F2;
+}
+
+.classic .acit-timer-time:hover {
+    border-color: #4182F2;
+}
+
+.acit-timer-time.running,
+.acit-timer-time.running:hover {
+    color: #DB4545;
+    border-color: #DB4545;
+}
+
+.acit-timer-time.paused,
+.acit-timer-time.paused:hover {
+    color: #ffce5b;
+    border-color: #ffce5b;
 }
 
 .acit-timer-button {
@@ -30,7 +74,6 @@
 	height: 19;
 	line-height: 17px;
 	color: black;
-	float: right;
 	text-align: center;
 	cursor: pointer;
 	box-sizing: border-box;
@@ -66,8 +109,7 @@
 .acit-timer-menu-dropdown {
 	visibility: visible;
 	display: block !important;
-	left: -32px !important;
-	top: 21px !important;
+	left: -104px !important;
 	text-align: left;
 }
 
