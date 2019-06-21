@@ -185,6 +185,14 @@
 	position: relative;
 }
 
+/**
+ * We need to unset the float to prevent the element from breaking the order
+ */
+.task_list .task_view_mode.project_task_list .acit-timer + .complete_toggler.icon {
+    float: unset;
+    vertical-align: middle;
+}
+
 .task_list_group:first-of-type .task_list:not(.subtask_list) {
 	clear: left;
 }

@@ -336,7 +336,7 @@
 
 					parentEl.prepend(timer.el.base.html([timer.el.time])); //, timer.el.menu]));
 
-					timer.el.base.addClass('acit-timer task_panel');
+					timer.el.base.addClass('acit-timer');
 
 					timer.el.menu
 						.addClass('icon icon_options_dropdown_black')
@@ -409,6 +409,11 @@
 						var task = parseInt(split[3].split('?')[0]);
 						var timer = self.getTimer(project, task);
 						var parentEl = $(this).find('.task_view_mode');
+
+						//it happens that task_view is not found because it is already the context
+						if(parentEl.length == 0) {
+							parentEl = $(this);
+						}
 
 						if (!timer) {
 							self.addTimer(project, task, parentEl);
